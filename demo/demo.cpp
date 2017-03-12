@@ -1,5 +1,5 @@
 #include <iostream>
-#include "sudoku.h"
+#include "../libsudoku/sudoku.h"
 
 using namespace std;
 
