@@ -4,6 +4,8 @@
 using namespace std;
 
 int main() {
-    Sudoku();
+
+    Sudoku s = Sudoku(BoardSize::SMALL);
+    cout << s << endl;
     return 0;
 }

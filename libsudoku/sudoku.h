@@ -1,9 +1,25 @@
 #ifndef SUDOKU_LIBRARY_H
 #define SUDOKU_LIBRARY_H
 
+#include <iostream>
+
+using namespace std;
+
+enum class BoardSize {
+    SMALL,
+    LARGE
+};
+
 class Sudoku {
+private:
+    int boardSize;
+    int **board;
 public:
-    Sudoku();
+    friend ostream &operator<<(ostream &output, Sudoku game);
+
+    Sudoku(BoardSize size);
+
+    ~Sudoku();
 };
 
 #endif // SUDOKU_LIBRARY_H
