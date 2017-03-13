@@ -17,6 +17,8 @@ private:
 public:
     friend ostream &operator<<(ostream &output, Sudoku game);
 
+    void loadFromFile(string fileName);
+
     Sudoku(BoardSize size);
 
     ~Sudoku();

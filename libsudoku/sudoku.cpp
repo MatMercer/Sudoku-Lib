@@ -1,10 +1,11 @@
 #include <iostream>
+#include <fstream>
 #include "sudoku.h"
 
 using namespace std;
 
 Sudoku::Sudoku(BoardSize size) {
-    // Alocates a square with the size given
+    // Allocates a square with the size given
     int boardSize = size == BoardSize::SMALL ? 3 : 9;
 
     this->board = new int *[boardSize];
@@ -25,6 +26,21 @@ Sudoku::~Sudoku() {
 //    delete [] this->board;
 }
 
+void Sudoku::loadFromFile(string fileName) {
+    ifstream File;
+    File.open(fileName);
+
+    if (!File) {
+        cout << "Failed to open " << fileName << endl;
+    }
+
+    for(int i = 0; i < this->boardSize; ++i) {
+        for (int j = 0; j < this->boardSize; ++j) {
+            File >> this->board[i][j];
+        }
+    }
+}
+
 ostream &operator<<(ostream &output, Sudoku game) {
     for (int i = 0; i < game.boardSize; ++i) {
         for (int j = 0; j < game.boardSize; ++j) {
@@ -40,3 +56,5 @@ ostream &operator<<(ostream &output, Sudoku game) {
 
     return output << endl;
 }
+
+
