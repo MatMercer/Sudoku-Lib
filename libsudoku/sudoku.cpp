@@ -58,7 +58,7 @@ ostream &operator<<(ostream &output, Sudoku game) {
         output << endl;
     }
 
-    return output << endl;
+    return output;
 }
 
 bool Sudoku::validateSyntax() {
