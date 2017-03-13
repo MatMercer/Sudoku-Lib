@@ -11,6 +11,10 @@ Sudoku::Sudoku(BoardSize size) {
     this->board = new int *[boardSize];
     for (int i = 0; i < boardSize; ++i) {
         this->board[i] = new int[boardSize];
+
+        for (int j = 0; j < boardSize; ++j) {
+            this->board[i][j] = 0;
+        }
     }
 
     this->boardSize = boardSize;
@@ -68,6 +72,46 @@ bool Sudoku::validateSyntax() {
         }
     }
     return valid;
+}
+
+bool Sudoku::gameOverLine(int line) {
+    int lineChecker[this->boardSize];
+    bool gameOver = true;
+
+    for (int i = 0; i < this->boardSize; ++i) {
+        lineChecker[i] = 0;
+    }
+
+    for (int i = 0; i < this->boardSize; ++i) {
+        lineChecker[this->board[line][i] - 1] += 1;
+    }
+
+    for (int i = 0; i < this->boardSize; ++i) {
+        if (lineChecker[i] != 1) {
+            cerr << "Line " << line+1 << " at column " << i+1 << " has a invalid number -> " << this->board[line][i] << "." << endl;
+            gameOver = false;
+        }
+    }
+
+    return gameOver;
+}
+
+bool Sudoku::gameOverLines() {
+    bool gameOver = true;
+
+    for (int i = 0; i < this->boardSize; ++i) {
+        gameOver = this->gameOverLine(i);
+    }
+
+    return gameOver;
+}
+
+bool Sudoku::gameOver() {
+    bool gameOver;
+
+    gameOver = this->gameOverLines();
+
+    return gameOver;
 }
 
 
