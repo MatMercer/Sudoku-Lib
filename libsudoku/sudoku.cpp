@@ -87,8 +87,8 @@ bool Sudoku::gameOverLine(int line) {
     }
 
     for (int i = 0; i < this->boardSize; ++i) {
-        if (lineChecker[i] != 1) {
-            cerr << "Line " << line+1 << " at column " << i+1 << " has a invalid number -> " << this->board[line][i] << "." << endl;
+        if (lineChecker[i] > 1) {
+            cerr << "Number " << i+1 << " repeats " << lineChecker[i] << " times in line " << line+1 << "." << endl;
             gameOver = false;
         }
     }
