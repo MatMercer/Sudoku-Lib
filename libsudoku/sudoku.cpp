@@ -31,7 +31,7 @@ void Sudoku::loadFromFile(string fileName) {
     File.open(fileName);
 
     if (!File) {
-        cout << "Failed to open " << fileName << endl;
+        cerr << "Failed to open " << fileName << endl;
     }
 
     for(int i = 0; i < this->boardSize; ++i) {
