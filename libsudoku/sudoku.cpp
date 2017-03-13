@@ -51,10 +51,23 @@ ostream &operator<<(ostream &output, Sudoku game) {
                 output << to_string(game.board[i][j]);
             }
         }
-        output << "\n";
+        output << endl;
     }
 
     return output << endl;
+}
+
+bool Sudoku::validateSyntax() {
+    bool valid = true;
+    for (int i = 0; i < this->boardSize; ++i) {
+        for (int j = 0; j < this->boardSize; ++j) {
+            if (this->board[i][j] > 9 || this->board[i][j] < 1) {
+                valid = false;
+                cerr << "Invalid Sudoku syntax at " << i+1 << ":" << j+1 << " -> " << this->board[i][j] << "." << endl;
+            }
+        }
+    }
+    return valid;
 }
 
 

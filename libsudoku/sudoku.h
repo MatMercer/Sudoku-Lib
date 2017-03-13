@@ -19,6 +19,8 @@ public:
 
     void loadFromFile(string fileName);
 
+    bool validateSyntax();
+
     Sudoku(BoardSize size);
 
     ~Sudoku();
