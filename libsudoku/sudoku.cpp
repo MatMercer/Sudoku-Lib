@@ -94,7 +94,7 @@ bool Sudoku::gameOverLine(int line) {
     for (int i = 0; i < this->boardSize; ++i) {
         if (lineChecker[i] > 1) {
             cerr << "Number " << i+1 << " repeats " << lineChecker[i] << " times in line " << line+1 << "." << endl;
-            gameOver = false;
+            gameOver &= false;
         }
         else if (lineChecker[i] == 0) {
             cerr << "There is no number " << i+1 << " at line " << line+1 << "." << endl;
@@ -108,7 +108,7 @@ bool Sudoku::gameOverLines() {
     bool gameOver = true;
 
     for (int i = 0; i < this->boardSize; ++i) {
-        gameOver = this->gameOverLine(i);
+        gameOver &= this->gameOverLine(i);
     }
 
     return gameOver;
@@ -134,7 +134,7 @@ bool Sudoku::gameOverColumn(int column) {
     for (int i = 0; i < this->boardSize; ++i) {
         if (columnChecker[i] > 1) {
             cerr << "Number " << i+1 << " repeats " << columnChecker[i] << " times in column " << column+1 << "." << endl;
-            gameOver = false;
+            gameOver &= false;
         }
         else if (columnChecker[i] == 0) {
             cerr << "There is no number " << i+1 << " at column " << column+1 << "." << endl;
@@ -168,7 +168,7 @@ bool Sudoku::gameOverQuadrant(int quadX, int quadY) {
     for (int i = 0; i < this->boardSize; ++i) {
         if (quadrantChecker[i] > 1) {
             cerr << "Number " << i+1 << " repeats " << quadrantChecker[i] << " times in quadrant " << quadX+1 << ":" << quadY+1 << "." << endl;
-            gameOver = false;
+            gameOver &= false;
         }
         else if (quadrantChecker[i] == 0) {
             cerr << "There is no number " << i+1 << " at quadrant " << quadX+1 << ":" << quadY+1 << "." << endl;
@@ -183,7 +183,7 @@ bool Sudoku::gameOverQuadrants() {
 
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
-            gameOver = this->gameOverQuadrant(i, j);
+            gameOver &= this->gameOverQuadrant(i, j);
         }
     }
 
@@ -195,7 +195,7 @@ bool Sudoku::gameOverColumns() {
     bool gameOver = true;
 
     for (int i = 0; i < this->boardSize; ++i) {
-        gameOver = this->gameOverColumn(i);
+        gameOver &= this->gameOverColumn(i);
     }
 
     return gameOver;
@@ -203,9 +203,10 @@ bool Sudoku::gameOverColumns() {
 
 
 bool Sudoku::gameOver() {
-    bool gameOver;
+    bool gameOver = true;
 
-    gameOver = this->gameOverLines();
+    // Checks all the board for errors
+    gameOver &= this->gameOverLines();
     gameOver &= this->gameOverColumns();
     gameOver &= this->gameOverQuadrants();
 
