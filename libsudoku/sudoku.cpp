@@ -38,7 +38,7 @@ void Sudoku::loadFromFile(string fileName) {
         cerr << "Failed to open " << fileName << endl;
     }
 
-    for(int i = 0; i < this->boardSize; ++i) {
+    for (int i = 0; i < this->boardSize; ++i) {
         for (int j = 0; j < this->boardSize; ++j) {
             File >> this->board[i][j];
         }
@@ -50,8 +50,7 @@ ostream &operator<<(ostream &output, Sudoku game) {
         for (int j = 0; j < game.boardSize; ++j) {
             if (j + 1 < game.boardSize) {
                 output << to_string(game.board[i][j]) << " ";
-            }
-            else {
+            } else {
                 output << to_string(game.board[i][j]);
             }
         }
@@ -67,7 +66,8 @@ bool Sudoku::validateSyntax() {
         for (int j = 0; j < this->boardSize; ++j) {
             if (this->board[i][j] > 9 || this->board[i][j] < 1) {
                 valid = false;
-                cerr << "Invalid Sudoku syntax at " << i+1 << ":" << j+1 << " -> " << this->board[i][j] << "." << endl;
+                cerr << "Invalid Sudoku syntax at " << i + 1 << ":" << j + 1 << " -> " << this->board[i][j] << "."
+                     << endl;
             }
         }
     }
@@ -93,11 +93,10 @@ bool Sudoku::gameOverLine(int line) {
     // Sends to cerr if the number repeats X times or isn't in the line
     for (int i = 0; i < this->boardSize; ++i) {
         if (lineChecker[i] > 1) {
-            cerr << "Number " << i+1 << " repeats " << lineChecker[i] << " times in line " << line+1 << "." << endl;
+            cerr << "Number " << i + 1 << " repeats " << lineChecker[i] << " times in line " << line + 1 << "." << endl;
             gameOver &= false;
-        }
-        else if (lineChecker[i] == 0) {
-            cerr << "There is no number " << i+1 << " at line " << line+1 << "." << endl;
+        } else if (lineChecker[i] == 0) {
+            cerr << "There is no number " << i + 1 << " at line " << line + 1 << "." << endl;
         }
     }
 
@@ -133,12 +132,22 @@ bool Sudoku::gameOverColumn(int column) {
     // Sends to cerr if the number repeats X times or isn't in the column
     for (int i = 0; i < this->boardSize; ++i) {
         if (columnChecker[i] > 1) {
-            cerr << "Number " << i+1 << " repeats " << columnChecker[i] << " times in column " << column+1 << "." << endl;
+            cerr << "Number " << i + 1 << " repeats " << columnChecker[i] << " times in column " << column + 1 << "."
+                 << endl;
             gameOver &= false;
+        } else if (columnChecker[i] == 0) {
+            cerr << "There is no number " << i + 1 << " at column " << column + 1 << "." << endl;
         }
-        else if (columnChecker[i] == 0) {
-            cerr << "There is no number " << i+1 << " at column " << column+1 << "." << endl;
-        }
+    }
+
+    return gameOver;
+}
+
+bool Sudoku::gameOverColumns() {
+    bool gameOver = true;
+
+    for (int i = 0; i < this->boardSize; ++i) {
+        gameOver &= this->gameOverColumn(i);
     }
 
     return gameOver;
@@ -167,11 +176,11 @@ bool Sudoku::gameOverQuadrant(int quadX, int quadY) {
     // Sends to cerr if the number repeats X times or isn't in the column
     for (int i = 0; i < this->boardSize; ++i) {
         if (quadrantChecker[i] > 1) {
-            cerr << "Number " << i+1 << " repeats " << quadrantChecker[i] << " times in quadrant " << quadX+1 << ":" << quadY+1 << "." << endl;
+            cerr << "Number " << i + 1 << " repeats " << quadrantChecker[i] << " times in quadrant " << quadX + 1 << ":"
+                 << quadY + 1 << "." << endl;
             gameOver &= false;
-        }
-        else if (quadrantChecker[i] == 0) {
-            cerr << "There is no number " << i+1 << " at quadrant " << quadX+1 << ":" << quadY+1 << "." << endl;
+        } else if (quadrantChecker[i] == 0) {
+            cerr << "There is no number " << i + 1 << " at quadrant " << quadX + 1 << ":" << quadY + 1 << "." << endl;
         }
     }
 
@@ -189,18 +198,6 @@ bool Sudoku::gameOverQuadrants() {
 
     return gameOver;
 }
-
-
-bool Sudoku::gameOverColumns() {
-    bool gameOver = true;
-
-    for (int i = 0; i < this->boardSize; ++i) {
-        gameOver &= this->gameOverColumn(i);
-    }
-
-    return gameOver;
-}
-
 
 bool Sudoku::gameOver() {
     bool gameOver = true;
