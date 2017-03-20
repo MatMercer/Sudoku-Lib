@@ -6,7 +6,9 @@ using namespace std;
 
 Sudoku::Sudoku(BoardSize size) {
     // Allocates a square with the size given
-    int boardSize = size == BoardSize::SMALL ? 3 : 9;
+    if (size == BoardSize::LARGE) {
+        this->boardSize = 9;
+    }
 
     this->board = new int *[boardSize];
     for (int i = 0; i < boardSize; ++i) {

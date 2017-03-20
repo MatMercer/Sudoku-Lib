@@ -6,7 +6,6 @@
 using namespace std;
 
 enum class BoardSize {
-    SMALL,
     LARGE
 };
 
