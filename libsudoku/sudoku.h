@@ -22,8 +22,8 @@ private:
     bool gameOverColumn(int column);
     bool gameOverColumns();
 
-    bool gameOverSquare();
-    bool gameOverSquares();
+    bool gameOverQuadrant(int quadX, int quadY);
+    bool gameOverQuadrants();
 public:
     friend ostream &operator<<(ostream &output, Sudoku game);
 

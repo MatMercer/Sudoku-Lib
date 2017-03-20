@@ -144,6 +144,53 @@ bool Sudoku::gameOverColumn(int column) {
     return gameOver;
 }
 
+bool Sudoku::gameOverQuadrant(int quadX, int quadY) {
+    // Histogram of numbers
+    int quadrantChecker[this->boardSize];
+    // If the quadrant is over or not
+    bool gameOver = true;
+
+    int idxX = quadX * 3;
+    int idxY = quadY * 3;
+
+    // Clean the histogram
+    for (int i = 0; i < this->boardSize; ++i) {
+        quadrantChecker[i] = 0;
+    }
+
+    for (int i = idxX; i < idxX + 3; ++i) {
+        for (int j = idxY; j < idxY + 3; ++j) {
+            quadrantChecker[this->board[i][j] - 1] += 1;
+        }
+    }
+
+    // Sends to cerr if the number repeats X times or isn't in the column
+    for (int i = 0; i < this->boardSize; ++i) {
+        if (quadrantChecker[i] > 1) {
+            cerr << "Number " << i+1 << " repeats " << quadrantChecker[i] << " times in quadrant " << quadX+1 << ":" << quadY+1 << "." << endl;
+            gameOver = false;
+        }
+        else if (quadrantChecker[i] == 0) {
+            cerr << "There is no number " << i+1 << " at quadrant " << quadX+1 << ":" << quadY+1 << "." << endl;
+        }
+    }
+
+    return gameOver;
+}
+
+bool Sudoku::gameOverQuadrants() {
+    bool gameOver = true;
+
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            gameOver = this->gameOverQuadrant(i, j);
+        }
+    }
+
+    return gameOver;
+}
+
+
 bool Sudoku::gameOverColumns() {
     bool gameOver = true;
 
@@ -160,8 +207,8 @@ bool Sudoku::gameOver() {
 
     gameOver = this->gameOverLines();
     gameOver &= this->gameOverColumns();
+    gameOver &= this->gameOverQuadrants();
 
     return gameOver;
 }
-
 
