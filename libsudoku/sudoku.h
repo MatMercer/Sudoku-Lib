@@ -19,7 +19,7 @@ private:
     bool gameOverLines();
 
     //TODO: Implement the functions below
-    bool gameOverColumn();
+    bool gameOverColumn(int column);
     bool gameOverColumns();
 
     bool gameOverSquare();

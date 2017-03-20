@@ -75,21 +75,29 @@ bool Sudoku::validateSyntax() {
 }
 
 bool Sudoku::gameOverLine(int line) {
+    // Histogram of numbers
     int lineChecker[this->boardSize];
+    // If the line is over or not
     bool gameOver = true;
 
+    // Clean the histogram
     for (int i = 0; i < this->boardSize; ++i) {
         lineChecker[i] = 0;
     }
 
+    // Sum the histogram based in the numbers
     for (int i = 0; i < this->boardSize; ++i) {
         lineChecker[this->board[line][i] - 1] += 1;
     }
 
+    // Sends to cerr if the number repeats X times or isn't in the line
     for (int i = 0; i < this->boardSize; ++i) {
         if (lineChecker[i] > 1) {
             cerr << "Number " << i+1 << " repeats " << lineChecker[i] << " times in line " << line+1 << "." << endl;
             gameOver = false;
+        }
+        else if (lineChecker[i] == 0) {
+            cerr << "There is no number " << i+1 << " at line " << line+1 << "." << endl;
         }
     }
 
@@ -106,10 +114,52 @@ bool Sudoku::gameOverLines() {
     return gameOver;
 }
 
+bool Sudoku::gameOverColumn(int column) {
+    // Histogram of numbers
+    int columnChecker[this->boardSize];
+    // If the column is over or not
+    bool gameOver = true;
+
+    // Clean the histogram
+    for (int i = 0; i < this->boardSize; ++i) {
+        columnChecker[i] = 0;
+    }
+
+    // Sum the histogram based in the numbers
+    for (int i = 0; i < this->boardSize; ++i) {
+        columnChecker[this->board[i][column] - 1] += 1;
+    }
+
+    // Sends to cerr if the number repeats X times or isn't in the column
+    for (int i = 0; i < this->boardSize; ++i) {
+        if (columnChecker[i] > 1) {
+            cerr << "Number " << i+1 << " repeats " << columnChecker[i] << " times in column " << column+1 << "." << endl;
+            gameOver = false;
+        }
+        else if (columnChecker[i] == 0) {
+            cerr << "There is no number " << i+1 << " at column " << column+1 << "." << endl;
+        }
+    }
+
+    return gameOver;
+}
+
+bool Sudoku::gameOverColumns() {
+    bool gameOver = true;
+
+    for (int i = 0; i < this->boardSize; ++i) {
+        gameOver = this->gameOverColumn(i);
+    }
+
+    return gameOver;
+}
+
+
 bool Sudoku::gameOver() {
     bool gameOver;
 
     gameOver = this->gameOverLines();
+    gameOver &= this->gameOverColumns();
 
     return gameOver;
 }
