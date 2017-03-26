@@ -1,5 +1,5 @@
 # Sudoku Lib
-A Sudoku Library in C++ implementation for a College Assignment.
+A C++ Sudoku Library implementation for a College Assignment.
 
 The **stdout output** from sudokudemo executable is:
 
